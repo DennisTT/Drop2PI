@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from utils import get_client
+from utils import get_client, replace_prefix
 
 class Folder:
 
@@ -84,8 +84,8 @@ class Folder:
 
     @property
     def save_to_dir(self):
-        from config import PATH_TO_WATCH
-        return '%s%s' % (PATH_TO_WATCH, self.path)
+        from config import PATH_TO_WATCH, DROPBOX_ROOT_FOLDER
+        return '%s%s' % (PATH_TO_WATCH, replace_prefix(self.path, DROPBOX_ROOT_FOLDER, ''))
 
     def save(self):
         if self.is_exists():

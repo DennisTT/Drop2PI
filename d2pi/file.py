@@ -27,8 +27,8 @@ class File:
 
     @property
     def save_to_dir(self):
-        from config import PATH_TO_WATCH
-        return '%s%s' % (PATH_TO_WATCH, self.path)
+        from config import PATH_TO_WATCH, DROPBOX_ROOT_FOLDER
+        return '%s%s' % (PATH_TO_WATCH, self.path.replace(DROPBOX_ROOT_FOLDER, ''))
 
     def save(self):
         return download(self.path, self.save_to_dir)

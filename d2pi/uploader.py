@@ -2,8 +2,8 @@
 import os
 import sys
 import socket
-from config import PATH_TO_WATCH
-from utils import get_client, parse_file_dir, md5_for_file
+from config import PATH_TO_WATCH, DROPBOX_ROOT_FOLDER
+from utils import get_client, parse_file_dir, md5_for_file, replace_prefix
 
 def upload(file_name, as_file_name):
     print "uploading %s to %s" % (file_name, as_file_name)
@@ -37,7 +37,7 @@ def delete(path):
     except Exception, e:
         print 'Error %s' % e
     try:
-        path = PATH_TO_WATCH + path
+        path = PATH_TO_WATCH + replace_prefix(path, DROPBOX_ROOT_FOLDER, '')
         if os.path.isdir(path):
             os.rmdir(path)
         else:
@@ -70,7 +70,7 @@ def _check_delete(path):
     client = get_client()
     if path == PATH_TO_WATCH:
         return
-    path = path.replace(PATH_TO_WATCH, '')
+    path = path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
     try:
         m = client.metadata(path)
         if m.get('is_deleted'):

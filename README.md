@@ -56,6 +56,7 @@ open config file and you can see code below:
 	ACCESS_TYPE = 'app_folder'
 	TOKEN_FILE  = 'dropbox_token.txt'
 	PATH_TO_WATCH = '/Users/guojing/.dropbox-sync'
+	DROPBOX_ROOT_FOLDER = '/'
 
 你需要去 [Dropbox Develop Page](https://www.dropbox.com/developers/apps) 创建一个APP，然后使用APP里的APP_KEY, APP_SECRET, ACCESS_TYPE。
 
@@ -64,6 +65,7 @@ You have to go to [Dropbox Develop Page](https://www.dropbox.com/developers/apps
 After created a App, you can find the APP_KEY and APP_SECRET, ACCESS_TYPE is also needed.
 
 PATH_TO_WATCH is the directory that sync with Dropbox.
+DROPBOX_ROOT_FOLDER is the Dropbox subfolder to sync (use "/" for all folders)
 
 #### run auth.py / 认证 ####
 

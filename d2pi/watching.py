@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, os, time
 from folder import Folder
-from config import PATH_TO_WATCH, AUTO_SYNC_TIME
+from config import PATH_TO_WATCH, AUTO_SYNC_TIME, DROPBOX_ROOT_FOLDER
 from uploader import upload, delete, move, create_folder, check_dir_deleted
 import logging
 from watchdog.observers import Observer
@@ -30,7 +30,7 @@ def clean():
 def sync_download():
     try:
         init()
-        f = Folder.get_by_path('/')
+        f = Folder.get_by_path(DROPBOX_ROOT_FOLDER)
         sync(f)
     except:
         pass
@@ -39,7 +39,7 @@ def sync_upload(event):
     try:
         if not event.is_directory:
             path = event.src_path
-            dropbox_path = path.replace(PATH_TO_WATCH, '')
+            dropbox_path = path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
             print 'file %s changed, updating...' % dropbox_path
             upload(path, dropbox_path)
     except:
@@ -48,7 +48,7 @@ def sync_upload(event):
 def sync_upload_create(event):
     try:
         path = event.src_path
-        dropbox_path = path.replace(PATH_TO_WATCH, '')
+        dropbox_path = path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
         print 'file %s created, updating...' % dropbox_path
         if event.is_directory:
             create_folder(dropbox_path)
@@ -60,7 +60,7 @@ def sync_upload_create(event):
 def sync_upload_delete(event):
     try:
         path = event.src_path
-        dropbox_path = path.replace(PATH_TO_WATCH, '')
+        dropbox_path = path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
         print 'file %s deleted, updating...' % dropbox_path
         delete(dropbox_path)
     except:
@@ -69,8 +69,8 @@ def sync_upload_delete(event):
 def sync_upload_move(event):
     try:
         print dir(event)
-        dropbox_to_path = event.dest_path.replace(PATH_TO_WATCH, '')
-        dropbox_from_path = event.src_path.replace(PATH_TO_WATCH, '')
+        dropbox_to_path = event.dest_path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
+        dropbox_from_path = event.src_path.replace(PATH_TO_WATCH, DROPBOX_ROOT_FOLDER)
         print 'file moved from %s to %s, updating...' % (dropbox_from_path,
             dropbox_to_path)
         move(dropbox_from_path, dropbox_to_path)

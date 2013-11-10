@@ -58,3 +58,7 @@ def md5_for_file(f, block_size=2**20):
         md5.update(data)
     return md5.digest()
 
+def replace_prefix(input, prefix, replacement):
+    if input.startswith(prefix):
+        return replacement + input[len(prefix):]
+    return input
